@@ -60,15 +60,16 @@ body {
   background: #fff;
   border: 1px solid #999;
   float: left;
-  font-size: 30px;
+  font-size: 50px;
   font-weight: bold;
   line-height: 34px;
-  height: 100px;
-  margin-right: 100px;
-  margin-top: 100px;
+  height: 150px;
+  margin-right: 30px;
+  margin-top: 30px;
   padding: 0;
   text-align: center;
-  width: 100px;
+  width: 150px;
+  border-radius: 50%;
 }
 
 .board-row:after {
@@ -78,8 +79,10 @@ body {
 }
 
 .status {
-  margin-bottom: 10px;
+  margin-bottom: 0px;
+  font-size: 24px;
 }
+
 .game {
   display: flex;
   flex-direction: row;
@@ -87,19 +90,15 @@ body {
 
 .game-info {
   margin-left: 10px;
+  margin-top: 50px;
 }
 
-.circle {
-  background: #fff;
-  border: 1px solid #999;
-  float: left;
-  font-size: 30px;
-  font-weight: bold;
-  line-height: 34px;
-  height: 100px;
-  margin-right: 100px;
-  margin-top: 100px;
-  padding: 0;
-  text-align: center;
-  width: 100px;
+.background-Blue {
+  background-color: blue;
+}
+.background-Red {
+  background-color: red;
+}
+.background-White {
+  background-color: white;
 }

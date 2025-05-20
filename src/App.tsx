@@ -6,8 +6,15 @@ interface SquareProps {
 }
 
 function Square({ value, onSquareClick }: SquareProps) {
+  let teamColor:string
+  switch (value){
+    case 'Blue': teamColor ="square background-Blue";break;
+    case 'Red': teamColor= "square background-Red";break;
+    default: teamColor = "square background-White";break;
+  }
+  
   return (
-    <button type="button" className="circle" onClick={onSquareClick}>
+    <button type="button" className={teamColor} onClick={onSquareClick} >
       {value}
     </button>
   );
@@ -28,9 +35,9 @@ function Board({
     }
     const nextSquares = squares.slice();
     if (xIsNext) {
-      nextSquares[i] = 'X';
+      nextSquares[i] = 'Blue';
     } else {
-      nextSquares[i] = 'O';
+      nextSquares[i] = 'Red';
     }
     onPlay(nextSquares);
   }
@@ -40,7 +47,7 @@ function Board({
   if (winner) {
     status = `Winner: ${winner}`;
   } else {
-    status = `Next player: ${xIsNext ? 'X' : 'O'}`;
+    status = `Next player: ${xIsNext ? 'Blue' : 'Red'}`;
   }
 
   return (
@@ -88,7 +95,6 @@ export default function Game() {
     if (move > 0) {
       description = `Go to move #${move}`;
     } else {
-      
       description = 'Go to game start';
     }
     return (
