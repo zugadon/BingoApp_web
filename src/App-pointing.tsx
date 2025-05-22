@@ -28,10 +28,11 @@ function Square({ spot,valueB,valueR, onSquareClick }: SquareProps) {
     case 8: spotName = "C3";break;
     default: spotName = "?";break;
   }
+  let value_abs = Math.abs(sum_value);
 
   return (
     <button type="button" className={teamColor} onClick={onSquareClick} >
-      {spotName+" "+sum_value}
+      {spotName+" "+value_abs}
     </button>
   );
 }
