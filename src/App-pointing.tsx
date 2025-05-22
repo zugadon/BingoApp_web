@@ -118,7 +118,7 @@ export default function Game() {
     setCurrentMoveR(nextMove);
   }
 
-  const moves = historyB.map((squares, move=currentMoveB+currentMoveR) => {
+  const moves = historyB.map((_squares, move=currentMoveB+currentMoveR) => {
     let description: string;
     if (move > 0) {
       description = `Go to move #${move}`;
