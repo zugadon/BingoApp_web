@@ -17,15 +17,15 @@ function Square({ spot,valueB,valueR, onSquareClick }: SquareProps) {
   
   let spotName:String;
   switch(spot){
-    case 0: spotName = "A1";break;
-    case 1: spotName = "A2";break;
-    case 2: spotName = "A3";break;
-    case 3: spotName = "B1";break;
-    case 4: spotName = "B2";break;
-    case 5: spotName = "B3";break;
-    case 6: spotName = "C1";break;
-    case 7: spotName = "C2";break;
-    case 8: spotName = "C3";break;
+    case 0: spotName = "1A";break;
+    case 1: spotName = "1B";break;
+    case 2: spotName = "1C";break;
+    case 3: spotName = "2A";break;
+    case 4: spotName = "2B";break;
+    case 5: spotName = "2C";break;
+    case 6: spotName = "3A";break;
+    case 7: spotName = "3B";break;
+    case 8: spotName = "3C";break;
     default: spotName = "?";break;
   }
   let value_abs = Math.abs(sum_value);
@@ -65,16 +65,25 @@ function Board({
   }
 
   const winner = calculateWinner(squaresB,squaresR,move);
+  let class_status:string;
   let status: string;
   if (winner) {
     status = `Winner: ${winner}`;
+    if(winner === 'Blue') class_status = "status font-Blue";
+      else  if(winner === "Red") class_status = "status font-Red";
+      else class_status = "status"
   } else {
     status = `Next player: ${BlueIsNext ? 'Blue' : 'Red'}`;
+      if(BlueIsNext) class_status = "status font-Blue";
+      else  class_status = "status font-Red";
   }
+
+
+
 
   return (
     <>
-      <div className="status">{status}</div>
+      <div className={class_status}>{status}</div>
       <div className="board-row">
         <Square spot={0} valueB={squaresB[0]} valueR={squaresR[0]} onSquareClick={() => handleClick(0)} />
         <Square spot={1} valueB={squaresB[1]} valueR={squaresR[1]} onSquareClick={() => handleClick(1)} />
