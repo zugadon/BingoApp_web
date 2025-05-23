@@ -32,7 +32,7 @@ function Square({ spot,valueB,valueR, onSquareClick }: SquareProps) {
 
   return (
     <button type="button" className={teamColor} onClick={onSquareClick} >
-      {spotName+" "+value_abs}
+      {spotName+"\n"+value_abs}
     </button>
   );
 }
@@ -41,15 +41,17 @@ function Board({
   BlueIsNext,
   squaresB,
   squaresR,
+  move,
   onPlay,
 }: {
   BlueIsNext: boolean;
   squaresB: (number)[];
   squaresR: (number)[];
+  move:(number),
   onPlay: (squaresB: (number)[],squaresR:(number)[]) => void;
 }) {
   function handleClick(i: number) {
-    if (calculateWinner(squaresB,squaresR)) {
+    if (calculateWinner(squaresB,squaresR,move)) {
       return;
     }
     const nextSquaresB = squaresB.slice();
@@ -62,7 +64,7 @@ function Board({
     onPlay(nextSquaresB,nextSquaresR);
   }
 
-  const winner = calculateWinner(squaresB,squaresR);
+  const winner = calculateWinner(squaresB,squaresR,move);
   let status: string;
   if (winner) {
     status = `Winner: ${winner}`;
@@ -136,7 +138,7 @@ export default function Game() {
   return (
     <div className="game">
       <div className="game-board">
-        <Board BlueIsNext={BlueIsNext} squaresB={currentSquaresB} squaresR={currentSquaresR} onPlay={handlePlay} />
+        <Board BlueIsNext={BlueIsNext} squaresB={currentSquaresB} squaresR={currentSquaresR} move={(currentMoveB+currentMoveR)/2} onPlay={handlePlay} />
       </div>
       <div className="game-info">
         <ol>{moves}</ol>
@@ -145,7 +147,7 @@ export default function Game() {
   );
 }
 
-function calculateWinner(squaresB: (number)[],squaresR: (number)[]) {
+function calculateWinner(squaresB: (number)[],squaresR: (number)[],move:(number)) {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],
@@ -156,13 +158,26 @@ function calculateWinner(squaresB: (number)[],squaresR: (number)[]) {
     [0, 4, 8],
     [2, 4, 6],
   ];
+  let Blue_bingo=0;
+  let Red_bingo=0;
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (squaresB[a]-squaresR[a] > 0 && squaresB[b]-squaresR[b] > 0 && squaresB[c]-squaresR[c] > 0) 
-      return "Blue";
+      Blue_bingo++;
     else if(squaresB[a]-squaresR[a] < 0 && squaresB[b]-squaresR[b] < 0 && squaresB[c]-squaresR[c] < 0)
-      return "Red";
-    
+      Red_bingo++;
+  }
+  if(Blue_bingo>=2) return "Blue";
+  else if(Red_bingo>=2) return "Red";
+
+  if(move>=40){
+    let sumB = squaresB[0]+squaresB[1]+squaresB[2]+(squaresB[3]+squaresB[4]+squaresB[5])*2+(squaresB[6]+squaresB[7]+squaresB[8])*3;
+    let sumR = squaresR[0]+squaresR[1]+squaresR[2]+(squaresR[3]+squaresR[4]+squaresR[5])*2+(squaresR[6]+squaresR[7]+squaresR[8])*3;
+    const sum = Math.abs(sumB-sumR);
+    if(sumB>sumR)
+      return "Blue:"+sum+"points";
+    else if(sumB<sumR)
+      return "Red:"+sum+"points";
   }
   return null;
 }
